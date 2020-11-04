@@ -40,3 +40,4 @@ private Node revertByLoop(Node head){
             this.value = value;
         }
     }
+// https://www.cnblogs.com/keeya/p/9218352.html
