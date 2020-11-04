@@ -1,0 +1,42 @@
+private Node revertByLoop(Node head){
+        Node pre = null;
+        Node next;
+        while(head != null){
+            //找到当前头结点的下一个节点
+            next = head.next;
+            //反转指针（第一次循环的时候，pre为空，下一次循环时，pre记录着本次循环的head节点，也就是本次循环的当前节点，对于下一次循环来说就是前一个结点）
+            head.next = pre;
+            //为前一个节点赋值，用于下次循环，方便上面的指针的反转
+            pre = head;
+            //head跳到下一个节点，和第一步呼应，继续循环
+            head = next;
+        }
+        //返回新链表的头结点
+        return pre;
+    }
+
+    private Node revert(Node head){
+        //结合下面的递归调用，最终能找到尾节点，然后开始出栈return
+        if(head == null || head.next == null){
+            return head;
+        }
+        //递归调用后，每次head节点后移一个，head.next作为参数递归调用，入参是head，可理解为在下一次递归中，head = head.next
+        //所以在递归结束出栈时，倒数第二次递归中的head指向倒数第二个节点，倒数第一次递归中head执行尾节点，head.next == null返回
+        Node next = head.next;
+        //递归结束后，newHead指向尾节点，作为新链表的头结点
+        Node newHead = revert(head.next);
+        //链表反转
+        next.next = head;
+        //断开原来的正向引用
+        head.next = null;
+        return newHead;
+    }
+
+    private static class Node{
+        private int value;
+        private Node next;
+
+        private Node(int value){
+            this.value = value;
+        }
+    }
