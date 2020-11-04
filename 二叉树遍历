@@ -1,0 +1,57 @@
+/**
+     * 深度优先遍历 ——采用先进后出的栈
+     * @param root 根节点
+     */
+    private void depth(Node root){
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            //弹出第一个元素
+            Node pop = stack.pop();
+            System.out.println(pop.value);
+            //栈是先进后出，故先进右孩子
+            if(pop.right != null){
+                stack.push(pop.right);
+            }
+            if(pop.left != null){
+                stack.push(pop.left);
+            }
+        }
+    }
+
+    /**
+     * 广度优先遍历 ——采用先进先出的队列
+     * @param root 根节点
+     */
+    private void breadth(Node root){
+        Queue<Node> list = new LinkedList<>();
+        list.add(root);
+        while (!list.isEmpty()){
+            //弹出第一个元素
+            Node poll = list.poll();
+            System.out.println(poll.value);
+            //队列先进先出，故先进左孩子
+            if(poll.left != null){
+                list.add(poll.left);
+            }
+            if(poll.right != null){
+                list.add(poll.right);
+            }
+        }
+    }
+
+    private static class Node{
+        private int value;
+        private Node left;
+        private Node right;
+
+        private Node(int value){
+            this.value = value;
+        }
+
+        private Node(int value, Node left, Node right){
+            this.value = value;
+            this.left = left;
+            this.right = right;
+        }
+    }
