@@ -1,0 +1,19 @@
+  /**
+   * 冒泡排序
+   * @param array 要排序的数组
+   */
+  private void bubbleSort(int[] array){
+      if(array.length == 0){
+          return;
+      }
+      int length = array.length;
+      for (int i = 0;i < length; i++){
+          for (int j = i + 1;j < length; j++){
+              if(array[i] > array[j]){
+                  int tem = array[i];
+                  array[i] = array[j];
+                  array[j] = tem;
+              }
+          }
+      }
+  }
