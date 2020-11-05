@@ -1,19 +1,53 @@
-  /**
-   * 冒泡排序
-   * @param array 要排序的数组
-   */
-  private void bubbleSort(int[] array){
-      if(array.length == 0){
-          return;
-      }
-      int length = array.length;
-      for (int i = 0;i < length; i++){
-          for (int j = i + 1;j < length; j++){
-              if(array[i] > array[j]){
-                  int tem = array[i];
-                  array[i] = array[j];
-                  array[j] = tem;
-              }
-          }
-      }
-  }
+/**
+ * 冒泡排序
+ * @param array 要排序的数组
+ */
+private void bubbleSort(int[] array){
+    if(array.length == 0){
+        return;
+    }
+    int length = array.length;
+    for (int i = 0;i < length; i++){
+        for (int j = i + 1;j < length; j++){
+            if(array[i] > array[j]){
+                int tem = array[i];
+                array[i] = array[j];
+                array[j] = tem;
+            }
+        }
+    }
+}
+
+/**
+ * 快速排序 --选取第一个元素作为基准，从右到左开始寻找第一个比基准小的数，并从左到右找到第一个比基准大的数，然后交换两个位置
+ * 当两个循环相遇时，交换相遇节点和基准节点的数
+ * 此时经过一次循环，保证比基准小的数都在左边，比基准大的数都在右边，然后递归调用即可
+ * @param array 要排序的数组
+ */
+private void quickSort(int[] array, int low, int high){
+    if(low > high){
+        return;
+    }
+    int tem = array[low];
+    int i = low;
+    int j = high;
+    while (i < j){
+        while (tem <= array[j] && i < j){
+            j--;
+        }
+
+        while (tem >= array[i] && i < j){
+            i++;
+        }
+
+        if(i < j){
+            tem = array[i];
+            array[i] = array[j];
+            array[j] = tem;
+        }
+    }
+    array[low] = array[i];
+    array[i] = tem;
+    quickSort(array, low, i - 1);
+    quickSort(array, i + 1, high);
+}
