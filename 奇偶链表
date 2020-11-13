@@ -1,0 +1,25 @@
+private Node oddEven(Node head){
+    if(head == null || head.next == null){
+        return head;
+    }
+
+    //奇数头结点
+    Node odd = head;
+    //偶数头结点
+    Node event = head.next;
+
+    Node node = head.next;
+    while (node != null && node.next != null){
+        //奇数节点指针指向下一个节点的下一个节点，进而生成一个奇数链表
+        head.next = head.next.next;
+        //因为上面的指针变化，其实是在原链表上移动两位
+        head = head.next;
+
+        //偶数节点指针指向下一个节点的下一个节点，进而生成一个偶数链表
+        node.next = node.next.next;
+        node = node.next;
+    }
+    //循环之后，原来的head节点已经指向奇数链表的尾节点，此时连接两个链表
+    head.next = event;
+    return odd;
+}
