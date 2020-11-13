@@ -1,0 +1,27 @@
+/**
+ * 最长子串
+ * @param s 字符串
+ * @return 最长子串长度
+ */
+private int longestChar(String s){
+    Set<Character> set = new HashSet<>();
+
+    int max = 0;
+    int left = -1;
+    for (int i = 0;i < s.length(); i++) {
+        //除第一次循环外，每次移除最左边的元素（每次循环表示有重复的元素，否则下面的while循环会一直进行下去）
+        if(i > 0){
+            set.remove(s.charAt(i - 1));
+        }
+
+        //一直向右移动，直到出现重复元素或循环完毕
+        while (left + 1 < s.length() && !set.contains(s.charAt(left + 1))){
+            left++;
+            set.add(s.charAt(left));
+        }
+
+        //每循环一次都记录一下最大长度
+        max = Math.max(max, left - i + 1);
+    }
+    return max;
+}
