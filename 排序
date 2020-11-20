@@ -29,6 +29,7 @@ private void quickSort(int[] array, int low, int high){
     if(low > high){
         return;
     }
+    int t;
     int tem = array[low];
     int i = low;
     int j = high;
@@ -44,9 +45,9 @@ private void quickSort(int[] array, int low, int high){
         }
         //交换比基准大的节点和比基准小的节点
         if(i < j){
-            tem = array[i];
+            t = array[i];
             array[i] = array[j];
-            array[j] = tem;
+            array[j] = t;
         }
     }
     //交换基准节点和两个循环相遇节点
