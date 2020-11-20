@@ -57,3 +57,42 @@ private void quickSort(int[] array, int low, int high){
     quickSort(array, low, i - 1);
     quickSort(array, i + 1, high);
 }
+
+/**
+ * 链表排序
+ * @param head 要排序的链表
+ */
+private Node sortLink(Node head){
+    if(head == null){
+        return null;
+    }
+    //创建临时节点，指向头结点，用于排序好之后，返回头结点（临时节点的下一个节点就是排序后链表的头结点）
+    Node temp = new Node(-1);
+    temp.next = head;
+
+    //作为当前要判断和移动的节点，初始值为第二个节点
+    Node curr = head.next;
+    //每次移动之后，当前节点的前部分已经排序好，作为排序好链表的最后节点
+    Node last = head;
+    while (curr != null){
+        if(last.value <= curr.value){
+            last = last.next;
+        }else {
+            //作为排序好链表的头结点的前一个节点，用于遍历排序好的链表，判断后续节点应该插入的位置
+            Node prev = temp;
+            //prev指向应插入位置的前一个节点
+            while (prev.next.value <= curr.value){
+                prev = prev.next;
+            }
+
+            //插入节点，排序好的链表的最后一个节点指向要排序节点的下一个节点
+            last.next = curr.next;
+            //插入要排序的节点
+            curr.next = prev.next;
+            prev.next = curr;
+        }
+        curr = last.next;
+    }
+
+    return temp.next;
+}
