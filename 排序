@@ -96,3 +96,56 @@ private Node sortLink(Node head){
 
     return temp.next;
 }
+
+/**
+     * 堆排序
+     * @param arr
+     */
+    private void heapSort(int[] arr){
+        int len;
+        if(arr == null || (len = arr.length) == 0){
+            return;
+        }
+
+        //第一个非叶子节点
+        int start = len / 2 - 1;
+        //针对每个非叶子节点进行比较交换
+        for (int i = start; i >= 0; i--){
+            adjustArr(arr, i, len);
+        }
+
+        //交换首尾元素，重新生成堆
+        for (int i = len - 1;i > 0;i--){
+            swapArr(arr, 0 , i);
+            //此时的堆，除了头节点之外都已排序完毕，所以每次只需要对头节点排序即可
+            adjustArr(arr, 0, i);
+        }
+    }
+
+    private void adjustArr(int[] arr, int index, int len){
+        //记录非叶子结点的值
+        int tem = arr[index];
+        //每次调整后，节点的孩子节点可能与 孩子节点的孩子节点 大小发生变化（上面的移动可能导致下面的排序失效），所以for循环的步长即为当前节点的左孩子节点（2 * index + 1）
+        for (int i = 2 * index + 1;i < len; i = 2 * i + 1){
+            //如果有右孩子节点，且右孩子比左孩子大，则使用右孩子与父节点比较
+            if((i + 1) < len && arr[i] < arr[i + 1]){
+                i++;
+            }
+            //比较孩子节点和父节点大小
+            if(arr[i] > tem){
+                //交换父子节点值
+                swapArr(arr, index, i);
+                //让index指向孩子节点，下次循环中，孩子节点将作为父节点
+                index = i;
+            }else {
+                //如果堆的上层大小没有变化，则堆的下一层一定没有变化（堆的上层变化才可能导致堆的下层变化），提前跳出循环
+                break;
+            }
+        }
+    }
+    
+    private void swapArr(int[] arr, int from, int to){
+        int tem = arr[from];
+        arr[from] = arr[to];
+        arr[to] = tem;
+    }
