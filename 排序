@@ -52,6 +52,55 @@ private void selectSort(int[] array){
     }
 }
 
+private void mergeSort(int[] arr){
+    int len;
+    if(arr == null || (len = arr.length) == 0 || len == 1){
+        return;
+    }
+    //先创建一个临时数组，避免递归时重复创建
+    int[] tem = new int[len];
+    mergeSort(arr, 0, len - 1, tem);
+}
+
+private void mergeSort(int[] arr, int left, int right, int[] tem){
+    if(left < right){
+        int mid = (left + right) / 2;
+        //二分递归调用
+        mergeSort(arr, left, mid, tem);
+        mergeSort(arr, mid + 1, right, tem);
+        //合并有序数组（其实是数组中的两部分）
+        merge(arr, left, right, mid, tem);
+    }
+}
+
+private void merge(int[] arr, int left, int right, int mid, int[] tem){
+    int i = left;
+    int j = mid + 1;
+    int index = 0;
+    while (i <= mid && j <= right){
+        //将较小的值先放到临时数组中
+        if(arr[i] > arr[j]){
+            tem[index++] = arr[j++];
+        }else {
+            tem[index++] = arr[i++];
+        }
+    }
+
+    //上面是且的关系，可能有其中一部分还没有循环完毕，将剩余部分放入临时数组中，二者应该只会执行一个或者都不执行
+    while (i <= mid){
+        tem[index++] = arr[i++];
+    }
+    while (j <= right){
+        tem[index++] = arr[j++];
+    }
+
+    //将临时数组中的元素覆盖到原始数组中，临时数组每次只会使用一部分，并且从头开始存储
+    index = 0;
+    while (left <= right){
+        arr[left++] = tem[index++];
+    }
+}
+
 /**
  * 插入排序
  * @param array
