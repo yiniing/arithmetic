@@ -52,6 +52,10 @@ private void selectSort(int[] array){
     }
 }
 
+/**
+ * 归并排序
+ * @param array
+ */
 private void mergeSort(int[] arr){
     int len;
     if(arr == null || (len = arr.length) == 0 || len == 1){
